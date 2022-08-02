@@ -16,7 +16,6 @@ Gem::Specification.new do |s|
   s.required_ruby_version = ">= 2.7.0"
 
   s.files         = `git ls-files`.split("\n")
-  s.test_files    = `git ls-files -- {test,spec,features}/*`.split("\n")
   s.require_paths = ["lib"]
 
   s.add_runtime_dependency "rails", ">= 6.0"
