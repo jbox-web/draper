@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-RSpec.describe 'Draper' do
+RSpec.feature 'Draper', js: true do
   spec_types = {
     view: ["/decorated_posts/1", "DecoratorController"],
     mailer: ["/decorated_posts/1/mail", "PostMailer"]
@@ -35,7 +35,7 @@ RSpec.describe 'Draper' do
 
   spec_types.each do |type, (path, controller)|
     describe "in a #{type}" do
-      before do
+      before(:each) do
         FactoryBot.create(:comment, content: 'foo')
         visit path
       end

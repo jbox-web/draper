@@ -11,10 +11,6 @@ Bundler.require(*Rails.groups)
 
 module Dummy
   class Application < Rails::Application
-    config.load_defaults 6.0
-
-    if Rails::VERSION::MAJOR == 7
-      config.active_record.legacy_connection_handling = false
-    end
+    config.load_defaults Rails::VERSION::STRING.to_f
   end
 end
