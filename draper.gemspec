@@ -31,7 +31,11 @@ Gem::Specification.new do |s|
   s.add_development_dependency "puma"
   s.add_development_dependency "rake"
   s.add_development_dependency "rspec-rails"
-  s.add_development_dependency "rubocop-rails"
+  s.add_development_dependency "rubocop"
+  s.add_development_dependency "rubocop-capybara"
+  s.add_development_dependency "rubocop-factory_bot"
+  s.add_development_dependency "rubocop-rake"
+  s.add_development_dependency "rubocop-rspec"
   s.add_development_dependency "simplecov"
   s.add_development_dependency "sqlite3", "~> 1.4.0"
 
