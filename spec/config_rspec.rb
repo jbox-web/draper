@@ -18,6 +18,11 @@ RSpec.configure do |config|
 
   config.use_transactional_fixtures = true
 
+  # run retry only on features
+  config.around :each, :js do |ex|
+    ex.run_with_retry retry: 3
+  end
+
   config.before(:suite) do
     FactoryBot.find_definitions
 

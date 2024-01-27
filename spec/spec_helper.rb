@@ -18,6 +18,7 @@ require 'capybara/cuprite'
 require 'database_cleaner'
 require 'factory_bot'
 require 'faker'
+require 'rspec/retry'
 
 # Load our own config
 require_relative 'config_capybara'

@@ -31,6 +31,7 @@ Gem::Specification.new do |s|
   s.add_development_dependency "puma"
   s.add_development_dependency "rake"
   s.add_development_dependency "rspec-rails"
+  s.add_development_dependency "rspec-retry"
   s.add_development_dependency "rubocop"
   s.add_development_dependency "rubocop-capybara"
   s.add_development_dependency "rubocop-factory_bot"
