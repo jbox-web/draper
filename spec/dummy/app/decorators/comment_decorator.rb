@@ -2,6 +2,8 @@
 
 class CommentDecorator < Draper::Decorator
 
+  decorates_association :author
+
   delegate :id, :created_at, :new_record?
 
   delegate :content

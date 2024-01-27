@@ -8,7 +8,7 @@ class PostMailer < ApplicationMailer
   helper :application
 
   def decorated_email(post)
-    @post = decorate(post)
+    @post = decorate(post, namespace: 'Email')
     mail to: "to@example.com", subject: "A decorated post"
   end
 

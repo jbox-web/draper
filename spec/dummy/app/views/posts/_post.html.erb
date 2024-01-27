@@ -8,11 +8,17 @@
   <dt>Posted:</dt>
   <dd id="posted_date"><%= post.posted_date %></dd>
 
+  <dt>Post author:</dt>
+  <dd id="posted_author"><%= post.author %></dd>
+
   <dt>Comments:</dt>
   <dd id="comments_content"><%= post.comments.first.content %></dd>
 
   <dt>Comments date:</dt>
   <dd id="comments_date"><%= post.comments.first.commented_date %></dd>
+
+  <dt>Comments author:</dt>
+  <dd id="comments_author"><%= post.comments.first.author %></dd>
 
   <dt>Built-in helpers:</dt>
   <dd id="truncated"><%= post.truncated %></dd>
