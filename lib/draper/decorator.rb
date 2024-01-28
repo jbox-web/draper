@@ -30,11 +30,17 @@ module Draper
       #     decorates_association :posts, PostDecorator
       #   end
       def decorates_association(relation_name, with: nil, namespace: nil, scope: nil)
-        relation_name = relation_name.to_sym
+        relation_sym = ":#{relation_name}"
+        with         = with.nil? ? "nil" : "'#{with}'"
+        namespace    = namespace.nil? ? "nil" : "'#{namespace}'"
+        scope        = scope.nil? ? "nil" : ":#{scope}"
 
-        define_method(relation_name) do
-          @decorated_associations[relation_name] ||= decorate(_scoped_decorator(relation_name, scope), with: with, namespace: namespace)
-        end
+        class_eval <<-METHOD, __FILE__, __LINE__ + 1
+          # frozen_string_literal: true
+          def #{relation_name}
+            @decorated_associations[#{relation_sym}] ||= decorate(_scoped_decorator(#{relation_sym}, #{scope}), with: #{with}, namespace: #{namespace})
+          end
+        METHOD
       end
 
       # Access the helpers proxy to call built-in and user-defined
