@@ -80,6 +80,28 @@ module Draper
       object.attributes.select { |attribute, _| respond_to?(attribute) }
     end
 
+    # Compares the source object with a possibly-decorated object.
+    #
+    # @return [Boolean]
+    def ==(other)
+      super || self.class == other.class && object == other.object
+    end
+
+    # Delegates equality to :== as expected
+    #
+    # @return [Boolean]
+    def eql?(other)
+      self == other
+    end
+
+    # Returns a unique hash for a decorated object based on
+    # the decorator class and the object being decorated.
+    #
+    # @return [Fixnum]
+    def hash
+      [self.class, object].hash
+    end
+
     private
 
       def decorate(object, with: nil, namespace: nil)

@@ -121,4 +121,24 @@ RSpec.describe Draper::Decorator do
       expect(decorator.attributes).to eq({foo: "bar"})
     end
   end
+
+  describe "#==" do
+    it "compares object" do
+      object = Product.new
+      decorator1 = described_class.new(object)
+      decorator2 = described_class.new(object)
+      expect(decorator1 == decorator2).to be true
+      expect(decorator2 == decorator1).to be true
+    end
+  end
+
+  describe "#eql?" do
+    it "compares object" do
+      object = Product.new
+      decorator1 = described_class.new(object)
+      decorator2 = described_class.new(object)
+      expect(decorator1.eql?(decorator2)).to be true
+      expect(decorator2.eql?(decorator1)).to be true
+    end
+  end
 end
