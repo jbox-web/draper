@@ -1,4 +1,6 @@
 # frozen_string_literal: true
 
-class Email::PostDecorator < PostDecorator
+module Email
+  class PostDecorator < PostDecorator
+  end
 end

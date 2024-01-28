@@ -1,4 +1,6 @@
 # frozen_string_literal: true
 
-class Email::CommentDecorator < CommentDecorator
+module Email
+  class CommentDecorator < CommentDecorator
+  end
 end

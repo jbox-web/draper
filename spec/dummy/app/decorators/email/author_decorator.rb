@@ -1,4 +1,6 @@
 # frozen_string_literal: true
 
-class Email::AuthorDecorator < AuthorDecorator
+module Email
+  class AuthorDecorator < AuthorDecorator
+  end
 end
