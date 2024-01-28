@@ -141,4 +141,12 @@ RSpec.describe Draper::Decorator do
       expect(decorator2.eql?(decorator1)).to be true
     end
   end
+
+  describe "#hash" do
+    it "returns object's hash" do
+      object = Product.new
+      decorator = described_class.new(object)
+      expect(decorator.hash).to eq [decorator.class, object].hash
+    end
+  end
 end
