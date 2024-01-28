@@ -17,7 +17,17 @@ module Draper
     end
 
     config.after_initialize do |_app|
-      require "draper/test/rspec_integration" if Rails.env.test? && defined?(RSpec) && RSpec.respond_to?(:configure)
+      if Rails.env.test? && defined?(RSpec) && RSpec.respond_to?(:configure)
+        require "draper/test/rspec_integration"
+
+        RSpec.configure do |config|
+          config.include Draper::Test::RspecIntegration, file_path: %r{spec/decorators}, type: :decorator
+
+          %i[decorator controller mailer].each do |type|
+            config.before(:each, type: type) { Draper::ViewContext.clear! }
+          end
+        end
+      end
     end
 
     rake_tasks do

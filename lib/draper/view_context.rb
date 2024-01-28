@@ -1,9 +1,5 @@
 # frozen_string_literal: true
 
-require "draper/view_context/build_strategy"
-require "draper/view_context/base_helper"
-require "draper/view_context/controller_helper"
-
 module Draper
   module ViewContext
     module_function

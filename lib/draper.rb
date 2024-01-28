@@ -3,9 +3,11 @@
 require "active_support/concern"
 require "request_store"
 
-require "draper/view_context"
-require "draper/decorator"
-require "draper/version"
+require 'zeitwerk'
+loader = Zeitwerk::Loader.for_gem
+loader.ignore("#{__dir__}/draper/rails")
+loader.ignore("#{__dir__}/draper/test")
+loader.setup
 
 module Draper
   require "draper/engine" if defined?(Rails)

@@ -20,6 +20,7 @@ Gem::Specification.new do |s|
 
   s.add_runtime_dependency "rails", ">= 6.1"
   s.add_runtime_dependency "request_store", ">= 1.0"
+  s.add_runtime_dependency "zeitwerk"
 
   s.add_development_dependency "appraisal"
   s.add_development_dependency "capybara"
