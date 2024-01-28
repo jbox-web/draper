@@ -18,10 +18,6 @@ module Draper
     end
   end
 
-  def self.configure
-    yield self
-  end
-
   def self.default_controller
     @default_controller ||= ApplicationController
   end
