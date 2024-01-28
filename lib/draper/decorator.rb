@@ -90,7 +90,7 @@ module Draper
     #
     # @return [Boolean]
     def ==(other)
-      super || self.class == other.class && object == other.object
+      super || (self.class == other.class && object == other.object)
     end
 
     # Delegates equality to :== as expected
