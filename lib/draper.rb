@@ -50,9 +50,8 @@ module Draper
 
   def self._guess_decorator(object_or_enumerable, with: nil, namespace: nil)
     object_or_enumerable = object_or_enumerable.first if object_or_enumerable.is_a? Enumerable
-    klass     = with || object_or_enumerable.class.name
-    namespace = "#{namespace}::" if namespace.present?
-    decorator = "#{namespace}#{klass}Decorator"
+    klass     = with || "#{object_or_enumerable.class.name}Decorator"
+    decorator = [namespace, klass].compact.join('::')
     decorator.safe_constantize || raise(Draper::UninferrableDecoratorError.new(klass, decorator))
   end
 

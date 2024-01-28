@@ -31,7 +31,7 @@ module Draper
       #   end
       def decorates_association(relation_name, with: nil, namespace: nil, scope: nil)
         relation_sym = ":#{relation_name}"
-        with         = with.nil? ? "nil" : "'#{with}'"
+        with         = with.nil? ? "nil" : "#{with}"
         namespace    = namespace.nil? ? "nil" : "'#{namespace}'"
         scope        = scope.nil? ? "nil" : ":#{scope}"
 

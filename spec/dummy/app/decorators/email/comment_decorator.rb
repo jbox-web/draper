@@ -2,6 +2,7 @@
 
 module Email
   class CommentDecorator < CommentDecorator
-    decorates_association :author, with: 'Foo', namespace: '::Bar'
+    # reset namespace to '' to not inherit 'Email' module namespace
+    decorates_association :author, with: ::Bar::FooDecorator, namespace: ''
   end
 end
