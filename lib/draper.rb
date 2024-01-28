@@ -39,10 +39,11 @@ module Draper
   end
 
   def self._decorate(object_or_enumerable, with: nil, namespace: nil)
+    klass = _guess_decorator(object_or_enumerable, with: with, namespace: namespace)
+
     if object_or_enumerable.is_a? Enumerable
-      object_or_enumerable.map { |object| _decorate(object, with: with, namespace: namespace) }
+      object_or_enumerable.map { |object| klass.new(object, namespace: namespace.to_s) }
     else
-      klass = _guess_decorator(object_or_enumerable, with: with, namespace: namespace)
       klass.new(object_or_enumerable, namespace: namespace.to_s)
     end
   end
