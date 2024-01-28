@@ -73,7 +73,7 @@ class CommentDraperDecorator < Draper::Decorator
 end
 
 class PostDraperDecorator < Draper::Decorator
-  decorates_association :comments, with: CommentDraperDecorator
+  decorates_association :comments, with: 'CommentDraper'
 
   def summary
     @summary ||= object.body&.truncate(170)
@@ -115,7 +115,7 @@ SCENARIOS.each_pair do |name, method|
     x.report("In model")  { model.first.public_send(method) }
     x.report("Dekorator") { PostDecorator.decorate(model).first.public_send(method) }
     x.report("Dekorator.new") { PostDecorator.decorate(model).first.public_send(method) }
-    x.report("Draper") { PostDraperDecorator.decorate(model).first.public_send(method) }
+    x.report("Draper") { Draper.decorate(model, with: 'PostDraper').first.public_send(method) }
     x.report("SimpleDelegator") { PostDelegator.new(model.first).public_send(method) }
 
     x.compare!
@@ -128,7 +128,7 @@ SCENARIOS.each_pair do |name, method|
     x.report("In model")  { model.first.public_send(method) }
     x.report("Dekorator") { PostDecorator.decorate(model).first.public_send(method) }
     x.report("Dekorator.new") { PostDecorator.decorate(model).first.public_send(method) }
-    x.report("Draper") { PostDraperDecorator.decorate(model).first.public_send(method) }
+    x.report("Draper") { Draper.decorate(model, with: 'PostDraper').first.public_send(method) }
     x.report("SimpleDelegator") { PostDelegator.new(model.first).public_send(method) }
 
     x.compare!
