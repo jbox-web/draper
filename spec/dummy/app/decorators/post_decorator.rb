@@ -9,7 +9,7 @@ class PostDecorator < Draper::Decorator
   delegate :id, :created_at, :new_record?
 
   decorates_association :comments
-  decorates_association :author, with: UserDecorator
+  decorates_association :author, with: 'User'
 
   def posted_date
     if created_at.to_date == DateTime.now.utc.to_date
