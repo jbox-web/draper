@@ -1,4 +1,6 @@
-require 'spec_helper'
+# frozen_string_literal: true
+
+require "spec_helper"
 
 RSpec.describe Draper::Decorator do
 
@@ -115,10 +117,10 @@ RSpec.describe Draper::Decorator do
 
   describe "#attributes" do
     it "returns only the object's attributes that are implemented by the decorator" do
-      decorator = described_class.new(double(attributes: {foo: "bar", baz: "qux"}))
+      decorator = described_class.new(double(attributes: { foo: "bar", baz: "qux" }))
       allow(decorator).to receive(:foo)
 
-      expect(decorator.attributes).to eq({foo: "bar"})
+      expect(decorator.attributes).to eq({ foo: "bar" })
     end
   end
 

@@ -1,6 +1,8 @@
-require 'spec_helper'
+# frozen_string_literal: true
 
-RSpec.feature 'Draper', js: true do
+require "spec_helper"
+
+RSpec.feature "Draper", js: true do
   spec_types = {
     view: ["/decorated_posts/1", "DecoratorController"],
     mailer: ["/decorated_posts/1/mail", "PostMailer"]
@@ -35,8 +37,8 @@ RSpec.feature 'Draper', js: true do
 
   spec_types.each do |type, (path, controller)|
     describe "in a #{type}" do
-      before(:each) do
-        FactoryBot.create(:comment, content: 'foo')
+      before do
+        FactoryBot.create(:comment, content: "foo")
         visit path
       end
 
@@ -61,15 +63,15 @@ RSpec.feature 'Draper', js: true do
         expect(page).to have_text("Hello, world!").in("#hello_world")
       end
 
-      it "can use user-defined helpers from the controller" do
+      it "can use user-defined helpers from the controller A" do
         expect(page).to have_text("Goodnight, moon!").in("#goodnight_moon")
       end
 
-      it "can use user-defined helpers from the controller" do
+      it "can use user-defined helpers from the controller B" do
         expect(page).to have_text("foo").in("#comments_content")
       end
 
-      it "can use user-defined helpers from the controller" do
+      it "can use user-defined helpers from the controller C" do
         expect(page).to have_text("Today").in("#comments_date")
       end
 

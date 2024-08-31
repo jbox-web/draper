@@ -1,4 +1,6 @@
-require 'spec_helper'
+# frozen_string_literal: true
+
+require "spec_helper"
 
 RSpec.describe Draper::ViewContext do
 
@@ -6,23 +8,23 @@ RSpec.describe Draper::ViewContext do
     it "returns the stored view context from RequestStore" do
       allow(RequestStore).to receive_messages store: { current_view_context: :stored_view_context }
 
-      expect(Draper::ViewContext.current).to be :stored_view_context
+      expect(described_class.current).to be :stored_view_context
     end
 
     context "when no view context is stored" do
       it "builds a view context" do
         allow(RequestStore).to receive_messages store: {}
-        allow(Draper::ViewContext).to receive_messages build_strategy: -> { :new_view_context }
+        allow(described_class).to receive_messages build_strategy: -> { :new_view_context }
 
-        expect(Draper::ViewContext.current).to be :new_view_context
+        expect(described_class.current).to be :new_view_context
       end
 
       it "stores the built view context" do
         store = {}
         allow(RequestStore).to receive_messages store: store
-        allow(Draper::ViewContext).to receive_messages build_strategy: -> { :new_view_context }
+        allow(described_class).to receive_messages build_strategy: -> { :new_view_context }
 
-        Draper::ViewContext.current
+        described_class.current
         expect(store[:current_view_context]).to be :new_view_context
       end
     end
@@ -33,7 +35,7 @@ RSpec.describe Draper::ViewContext do
       store = {}
       allow(RequestStore).to receive_messages store: store
 
-      Draper::ViewContext.current = :stored_view_context
+      described_class.current = :stored_view_context
       expect(store[:current_view_context]).to be :stored_view_context
     end
   end
@@ -42,7 +44,7 @@ RSpec.describe Draper::ViewContext do
     it "returns the stored controller from RequestStore" do
       allow(RequestStore).to receive_messages store: { current_controller: :stored_controller }
 
-      expect(Draper::ViewContext.controller).to be :stored_controller
+      expect(described_class.controller).to be :stored_controller
     end
   end
 
@@ -51,7 +53,7 @@ RSpec.describe Draper::ViewContext do
       store = {}
       allow(RequestStore).to receive_messages store: store
 
-      Draper::ViewContext.controller = :stored_controller
+      described_class.controller = :stored_controller
       expect(store[:current_controller]).to be :stored_controller
     end
 
@@ -63,7 +65,7 @@ RSpec.describe Draper::ViewContext do
 
       allow(RequestStore).to receive_messages store: store
 
-      Draper::ViewContext.controller = :other_stored_controller
+      described_class.controller = :other_stored_controller
 
       expect(store).to include(current_controller: :other_stored_controller)
       expect(store).not_to include(:current_view_context)
@@ -77,7 +79,7 @@ RSpec.describe Draper::ViewContext do
 
       allow(RequestStore).to receive_messages store: store
 
-      Draper::ViewContext.controller = :stored_controller
+      described_class.controller = :stored_controller
 
       expect(store).to include(current_controller: :stored_controller)
       expect(store).to include(current_view_context: :stored_view_context)
@@ -86,25 +88,25 @@ RSpec.describe Draper::ViewContext do
 
   describe ".build" do
     it "returns a new view context using the build strategy" do
-      allow(Draper::ViewContext).to receive_messages build_strategy: -> { :new_view_context }
+      allow(described_class).to receive_messages build_strategy: -> { :new_view_context }
 
-      expect(Draper::ViewContext.build).to be :new_view_context
+      expect(described_class.build).to be :new_view_context
     end
   end
 
   describe ".build!" do
     it "returns a helper proxy for the new view context" do
-      allow(Draper::ViewContext).to receive_messages build_strategy: -> { :new_view_context }
+      allow(described_class).to receive_messages build_strategy: -> { :new_view_context }
 
-      expect(Draper::ViewContext.build!).to be :new_view_context
+      expect(described_class.build!).to be :new_view_context
     end
 
     it "stores the helper proxy" do
       store = {}
       allow(RequestStore).to receive_messages store: store
-      allow(Draper::ViewContext).to receive_messages build_strategy: -> { :new_view_context }
+      allow(described_class).to receive_messages build_strategy: -> { :new_view_context }
 
-      Draper::ViewContext.build!
+      described_class.build!
       expect(store[:current_view_context]).to be :new_view_context
     end
   end
@@ -114,7 +116,7 @@ RSpec.describe Draper::ViewContext do
       store = { current_controller: :stored_controller, current_view_context: :stored_view_context }
       allow(RequestStore).to receive_messages store: store
 
-      Draper::ViewContext.clear!
+      described_class.clear!
       expect(store).not_to have_key :current_controller
       expect(store).not_to have_key :current_view_context
     end
@@ -122,11 +124,11 @@ RSpec.describe Draper::ViewContext do
 
   describe ".build_strategy" do
     it "defaults to full" do
-      expect(Draper::ViewContext.build_strategy).to be_a Draper::ViewContext::BuildStrategy::Full
+      expect(described_class.build_strategy).to be_a Draper::ViewContext::BuildStrategy::Full
     end
 
     it "memoizes" do
-      expect(Draper::ViewContext.build_strategy).to be Draper::ViewContext.build_strategy
+      expect(described_class.build_strategy).to be described_class.build_strategy # rubocop:disable RSpec/IdenticalEqualityAssertion
     end
   end
 end

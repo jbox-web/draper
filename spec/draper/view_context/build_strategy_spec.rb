@@ -1,4 +1,6 @@
-require 'spec_helper'
+# frozen_string_literal: true
+
+require "spec_helper"
 
 RSpec.describe "ViewContext" do
   def fake_view_context
@@ -15,7 +17,7 @@ RSpec.describe "ViewContext" do
         it "returns the controller's view context" do
           view_context = fake_view_context
           allow(Draper::ViewContext).to receive_messages controller: fake_controller(view_context)
-          strategy = Draper::ViewContext::BuildStrategy::Full.new
+          strategy = described_class.new
 
           expect(strategy.call).to be view_context
         end
@@ -24,7 +26,7 @@ RSpec.describe "ViewContext" do
       context "when a current controller is not set" do
         it "uses ApplicationController" do
           expect(Draper::ViewContext.controller).to be_nil
-          view_context = Draper::ViewContext::BuildStrategy::Full.new.call
+          view_context = described_class.new.call
           expect(view_context.controller).to eq Draper::ViewContext.controller
           expect(view_context.controller).to be_an ApplicationController
         end
@@ -33,7 +35,7 @@ RSpec.describe "ViewContext" do
       it "adds a request if one is not defined" do
         controller = Class.new(ActionController::Base).new
         allow(Draper::ViewContext).to receive_messages controller: controller
-        strategy = Draper::ViewContext::BuildStrategy::Full.new
+        strategy = described_class.new
 
         expect(controller.request).to be_nil
         strategy.call
@@ -48,14 +50,14 @@ RSpec.describe "ViewContext" do
       it "compatible with rails 5.1 change on ActionController::TestRequest.create method" do
         ActionController::TestRequest.class_eval do
           if ActionController::TestRequest.method(:create).parameters.first == []
-            def create controller_class
+            def create(_controller_class)
               create
             end
           end
         end
         controller = Class.new(ActionController::Base).new
         allow(Draper::ViewContext).to receive_messages controller: controller
-        strategy = Draper::ViewContext::BuildStrategy::Full.new
+        strategy = described_class.new
 
         expect(controller.request).to be_nil
         strategy.call
@@ -64,7 +66,7 @@ RSpec.describe "ViewContext" do
 
       it "adds methods to the view context from the constructor block" do
         allow(Draper::ViewContext).to receive(:controller).and_return(fake_controller)
-        strategy = Draper::ViewContext::BuildStrategy::Full.new do
+        strategy = described_class.new do
           def a_helper_method; end
         end
 
@@ -77,7 +79,7 @@ RSpec.describe "ViewContext" do
         helpers = Module.new do
           def a_helper_method; end
         end
-        strategy = Draper::ViewContext::BuildStrategy::Full.new do
+        strategy = described_class.new do
           include helpers
         end
 
@@ -89,7 +91,7 @@ RSpec.describe "ViewContext" do
   describe Draper::ViewContext::BuildStrategy::Fast do
     describe "#call" do
       it "returns an instance of a subclass of ActionView::Base" do
-        strategy = Draper::ViewContext::BuildStrategy::Fast.new
+        strategy = described_class.new
 
         returned = strategy.call
 
@@ -98,19 +100,19 @@ RSpec.describe "ViewContext" do
       end
 
       it "returns different instances each time" do
-        strategy = Draper::ViewContext::BuildStrategy::Fast.new
+        strategy = described_class.new
 
         expect(strategy.call).not_to be strategy.call
       end
 
       it "returns the same subclass each time" do
-        strategy = Draper::ViewContext::BuildStrategy::Fast.new
+        strategy = described_class.new
 
-        expect(strategy.call.class).to be strategy.call.class
+        expect(strategy.call.class).to be strategy.call.class # rubocop:disable RSpec/IdenticalEqualityAssertion
       end
 
       it "adds methods to the view context from the constructor block" do
-        strategy = Draper::ViewContext::BuildStrategy::Fast.new do
+        strategy = described_class.new do
           def a_helper_method; end
         end
 
@@ -121,7 +123,7 @@ RSpec.describe "ViewContext" do
         helpers = Module.new do
           def a_helper_method; end
         end
-        strategy = Draper::ViewContext::BuildStrategy::Fast.new do
+        strategy = described_class.new do
           include helpers
         end
 

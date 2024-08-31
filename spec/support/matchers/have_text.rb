@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module HaveTextMatcher
   def have_text(text)
     HaveText.new(text)
@@ -29,20 +31,17 @@ module HaveTextMatcher
 
     private
 
-    def within
-      if @css && @subject.has_css?(@css)
-        "within\n#{@subject.find(@css).native}"
-      else
-        inside
+      def within
+        if @css && @subject.has_css?(@css)
+          "within\n#{@subject.find(@css).native}"
+        else
+          inside
+        end
       end
-    end
 
-    def inside
-      @css ? "inside #{@css.inspect}" : "anywhere"
-    end
+      def inside
+        @css ? "inside #{@css.inspect}" : "anywhere"
+      end
+
   end
-end
-
-RSpec.configure do |config|
-  config.include HaveTextMatcher
 end

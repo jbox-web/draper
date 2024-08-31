@@ -1,9 +1,12 @@
+# frozen_string_literal: true
+
 # Configure RSpec
 RSpec.configure do |config|
   config.include Capybara::DSL
+  config.include HaveTextMatcher
 
   # Use DB agnostic schema by default
-  load Rails.root.join('db', 'schema.rb').to_s
+  load Rails.root.join("db", "schema.rb").to_s
 
   config.order = :random
   Kernel.srand config.seed
@@ -19,7 +22,7 @@ RSpec.configure do |config|
   config.use_transactional_fixtures = true
 
   # run retry only on features
-  config.around :each, :js do |ex|
+  config.around :each, js: true do |ex|
     ex.run_with_retry retry: 3
   end
 
@@ -31,11 +34,11 @@ RSpec.configure do |config|
     DatabaseCleaner.strategy = :transaction
   end
 
-  config.before(:each) do
+  config.before do
     DatabaseCleaner.start
   end
 
-  config.after(:each) do
+  config.after do
     DatabaseCleaner.clean
   end
 end
