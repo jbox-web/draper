@@ -26,7 +26,9 @@ RAILS_VERSIONS.each do |version|
     when "7.1.3"
       gem "sprockets-rails"
 
-      # Fix: warning: logger was loaded from the standard library, but will no longer be part of the default gems since Ruby 3.5.0. Add logger to your Gemfile or gemspec.
+      # Fix:
+      # warning: logger was loaded from the standard library, but will no longer be part of the default gems since Ruby 3.5.0
+      # Add logger to your Gemfile or gemspec.
       install_if '-> { Gem::Version.new(RUBY_VERSION) >= Gem::Version.new("3.4.0") }' do
         gem "logger"
       end

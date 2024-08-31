@@ -31,11 +31,11 @@ module Draper
       #   end
       def decorates_association(relation_name, with: nil, namespace: nil, scope: nil)
         relation_sym = ":#{relation_name}"
-        with         = with.nil? ? "nil" : "#{with}"
+        with         = with.nil? ? "nil" : "#{with}" # rubocop:disable Style/RedundantInterpolation
         namespace    = namespace.nil? ? "nil" : "'#{namespace}'"
         scope        = scope.nil? ? "nil" : ":#{scope}"
 
-        class_eval <<-METHOD, __FILE__, __LINE__ + 1
+        class_eval <<-METHOD, __FILE__, __LINE__ + 1 # rubocop:disable Style/DocumentDynamicEvalDefinition
           # frozen_string_literal: true
           def #{relation_name}
             @decorated_associations[#{relation_sym}] ||= decorate(_scoped_decorator(#{relation_sym}, #{scope}), with: #{with}, namespace: #{namespace})

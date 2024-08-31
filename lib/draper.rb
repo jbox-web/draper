@@ -24,7 +24,7 @@ module Draper
       @default_controller ||= ApplicationController
     end
 
-    def default_controller=(controller)
+    def default_controller=(controller) # rubocop:disable Style/TrivialAccessors
       @default_controller = controller
     end
 
@@ -53,7 +53,7 @@ module Draper
       decorator.safe_constantize || raise(Draper::UninferrableDecoratorError.new(klass, decorator))
     end
 
-    def decorable?(object_or_enumerable)
+    def decorable?(object_or_enumerable) # rubocop:disable Metrics/CyclomaticComplexity
       return false if defined?(ActiveRecord::Relation) \
         && object_or_enumerable.is_a?(ActiveRecord::Relation) \
         && object_or_enumerable.blank?
