@@ -13,8 +13,8 @@ AllCops:
   Exclude:
     - bin/*
     - gemfiles/*
-    - benchmarks/*
     - spec/dummy/**/*
+    - benchmarks/*
 
 Gemspec/RequireMFA:
   Enabled: false
