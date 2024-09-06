@@ -6,7 +6,7 @@ RSpec.configure do |config|
   config.include HaveTextMatcher
 
   # Use DB agnostic schema by default
-  load Rails.root.join("db", "schema.rb").to_s
+  load Rails.root.join('db', 'schema.rb').to_s
 
   config.order = :random
   Kernel.srand config.seed

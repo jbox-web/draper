@@ -29,9 +29,6 @@ Style/Documentation:
 Style/HashSyntax:
   EnforcedShorthandSyntax: never
 
-Style/StringLiterals:
-  EnforcedStyle: double_quotes
-
 Style/ArgumentsForwarding:
   Enabled: false
 

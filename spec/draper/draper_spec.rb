@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
-require "spec_helper"
+require 'spec_helper'
 
 RSpec.describe Draper do
-  describe ".decorate" do
-    context "when decorator exists" do
-      it "decorates object" do
+  describe '.decorate' do
+    context 'when decorator exists' do
+      it 'decorates object' do
         object = Product.new
         decorator = described_class.decorate(object)
         expect(decorator.object).to be object
@@ -13,7 +13,7 @@ RSpec.describe Draper do
     end
 
     context "when decorator doesn't exist" do
-      it "decorates object" do
+      it 'decorates object' do
         object = Model.new
         expect {
           described_class.decorate(object)

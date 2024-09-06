@@ -1,16 +1,16 @@
 # frozen_string_literal: true
 
-require "active_support/concern"
-require "request_store"
+require 'active_support/concern'
+require 'request_store'
 
-require "zeitwerk"
+require 'zeitwerk'
 loader = Zeitwerk::Loader.for_gem
 loader.ignore("#{__dir__}/draper/rails")
 loader.ignore("#{__dir__}/draper/test")
 loader.setup
 
 module Draper
-  require "draper/engine" if defined?(Rails)
+  require 'draper/engine' if defined?(Rails)
 
   class UninferrableDecoratorError < NameError
     def initialize(klass, decorator)
@@ -49,7 +49,7 @@ module Draper
     def _guess_decorator(object_or_enumerable, with: nil, namespace: nil)
       object_or_enumerable = object_or_enumerable.first if object_or_enumerable.is_a? Enumerable
       klass     = with || "#{object_or_enumerable.class.name}Decorator"
-      decorator = [namespace, klass].compact.join("::")
+      decorator = [namespace, klass].compact.join('::')
       decorator.safe_constantize || raise(Draper::UninferrableDecoratorError.new(klass, decorator))
     end
 

@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-guard :rspec, cmd: "bin/rspec" do
-  require "guard/rspec/dsl"
+guard :rspec, cmd: 'bin/rspec' do
+  require 'guard/rspec/dsl'
   dsl = Guard::RSpec::Dsl.new(self)
 
   # RSpec files
