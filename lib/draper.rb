@@ -1,16 +1,19 @@
 # frozen_string_literal: true
 
+# require external dependencies
 require 'active_support/concern'
 require 'request_store'
-
 require 'zeitwerk'
-loader = Zeitwerk::Loader.for_gem
-loader.ignore("#{__dir__}/draper/rails")
-loader.ignore("#{__dir__}/draper/test")
-loader.setup
+
+# load zeitwerk
+Zeitwerk::Loader.for_gem.tap do |loader|
+  loader.ignore("#{__dir__}/draper/rails")
+  loader.ignore("#{__dir__}/draper/test")
+  loader.setup
+end
 
 module Draper
-  require 'draper/engine' if defined?(Rails)
+  require_relative 'draper/engine' if defined?(Rails)
 
   class UninferrableDecoratorError < NameError
     def initialize(klass, decorator)

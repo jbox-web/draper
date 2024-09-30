@@ -18,7 +18,7 @@ module Draper
 
     config.after_initialize do |_app|
       if Rails.env.test? && defined?(RSpec) && RSpec.respond_to?(:configure)
-        require 'draper/test/rspec_integration'
+        require_relative 'test/rspec_integration'
 
         RSpec.configure do |config|
           config.include Draper::Test::RspecIntegration, file_path: %r{spec/decorators}, type: :decorator
