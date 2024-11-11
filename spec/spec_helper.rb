@@ -13,12 +13,7 @@ require File.expand_path('dummy/config/environment.rb', __dir__)
 
 # Load test gems
 require 'rspec/rails'
-require 'capybara/rspec'
 require 'capybara/cuprite'
-require 'database_cleaner'
-require 'factory_bot'
-require 'faker'
-require 'rspec/retry'
 
 # Requires supporting ruby files with custom matchers and macros, etc,
 # in spec/support/ and its subdirectories.
