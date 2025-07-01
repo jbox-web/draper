@@ -13,7 +13,7 @@ Gem::Specification.new do |s|
   s.description = 'Draper adds an object-oriented layer of presentation logic to your Rails apps.'
   s.license     = 'MIT'
 
-  s.required_ruby_version = '>= 3.1.0'
+  s.required_ruby_version = '>= 3.2.0'
 
   s.files = Dir['README.md', 'LICENSE', 'lib/**/*.rb', 'lib/**/*.rake']
 
