@@ -1,4 +1,4 @@
-# frozen_string_literal: truee
+# frozen_string_literal: true
 
 class DecoratorController < ApplicationController
   include LocalizedUrls
