@@ -37,7 +37,3 @@ Dir[File.expand_path('support/**/*.rb', __dir__)].each { |f| require f }
 # Load our own config
 require_relative 'config_capybara'
 require_relative 'config_rspec'
-
-class Model; end # rubocop:disable Lint/EmptyClass
-class Product < Model; end
-class ProductDecorator < Draper::Decorator; end

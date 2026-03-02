@@ -35,6 +35,10 @@ Style/ArgumentsForwarding:
 Style/BlockDelimiters:
   AllowedPatterns: ['expect']
 
+Style/OneClassPerFile:
+  Exclude:
+    - spec/support/models.rb
+
 ##########
 # LAYOUT #
 ##########
