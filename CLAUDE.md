@@ -4,7 +4,8 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## What this is
 
-A modernized fork of the Draper gem (`jbox-web/draper`) — view models / decorators for Rails.
+A simpler reimplementation of the Draper gem (`jbox-web/draper`) — view models / decorators for Rails,
+borrowing ideas from `dekorator`.
 It wraps model objects with an object-oriented layer of presentation logic, kept out of models and
 procedural helpers. Ruby `>= 3.2`; the gemspec requires Rails `>= 7.2`, matching what CI and
 Appraisals exercise (`7.2` / `8.0` / `8.1`). Runtime dependencies: `rails`, `request_store`, `zeitwerk`.
