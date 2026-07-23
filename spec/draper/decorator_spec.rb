@@ -151,4 +151,56 @@ RSpec.describe Draper::Decorator do
       expect(decorator.hash).to eq [decorator.class, object].hash
     end
   end
+
+  describe '.decorates_association' do
+    it 'decorates the association with the given decorator' do
+      klass = Class.new(described_class) do
+        decorates_association :item, with: ProductDecorator
+      end
+
+      decorated = klass.new(double(item: Product.new)).item
+
+      expect(decorated).to be_a ProductDecorator
+    end
+
+    it 'memoizes the decorated association' do
+      klass = Class.new(described_class) do
+        decorates_association :item, with: ProductDecorator
+      end
+      instance = klass.new(double(item: Product.new))
+
+      first = instance.item
+      expect(instance.item).to be first
+    end
+
+    it 'resolves an explicit top-level with: class, ignoring a same-named namespaced constant' do
+      top   = Class.new(described_class)
+      inner = Class.new(described_class)
+      stub_const('AuditCollisionDecorator', top)
+      stub_const('AuditNs', Module.new)
+      stub_const('AuditNs::AuditCollisionDecorator', inner)
+
+      klass = Class.new(described_class) do
+        decorates_association :item, with: AuditCollisionDecorator
+      end
+
+      decorated = klass.new(double(item: Product.new)).item
+
+      expect(decorated).to be_an_instance_of top
+      expect(decorated).not_to be_an_instance_of inner
+    end
+
+    it 'works when a subclass overrides #initialize without calling super' do
+      klass = Class.new(described_class) do
+        decorates_association :items
+
+        def initialize(object) # rubocop:disable Lint/MissingSuper
+          @object = object
+          @namespace = nil
+        end
+      end
+
+      expect { klass.new(double(items: [])).items }.not_to raise_error
+    end
+  end
 end

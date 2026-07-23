@@ -21,13 +21,13 @@ module Draper
       # @param with [Class] the decorator class to use. If empty a decorator will be guessed.
       #
       # @example Define an association to decorate
-      #   class UserDecorator < Dekorator::Base
+      #   class UserDecorator < Draper::Decorator
       #     decorates_association :posts
       #   end
       #
-      #   # A decorator could be precise
-      #   class UserDecorator < Dekorator::Base
-      #     decorates_association :posts, PostDecorator
+      #   # A decorator can be given explicitly
+      #   class UserDecorator < Draper::Decorator
+      #     decorates_association :posts, with: PostDecorator
       #   end
       def decorates_association(relation_name, with: nil, namespace: nil, scope: nil)
         relation_sym = ":#{relation_name}"
@@ -38,7 +38,7 @@ module Draper
         class_eval <<-METHOD, __FILE__, __LINE__ + 1 # rubocop:disable Style/DocumentDynamicEvalDefinition
           # frozen_string_literal: true
           def #{relation_name}
-            @decorated_associations[#{relation_sym}] ||= decorate(_scoped_decorator(#{relation_sym}, #{scope}), with: #{with}, namespace: #{namespace})
+            (@decorated_associations ||= {})[#{relation_sym}] ||= decorate(_scoped_decorator(#{relation_sym}, #{scope}), with: #{with}, namespace: #{namespace})
           end
         METHOD
       end
@@ -61,7 +61,9 @@ module Draper
     def initialize(object, namespace: nil)
       @object    = object
       @namespace = namespace
-      @decorated_associations = {}
+      # Set eagerly (stable object shape) but leave the hash unallocated until an
+      # association is actually decorated; the accessor lazily assigns it.
+      @decorated_associations = nil
     end
 
     # ActiveModel compatibility

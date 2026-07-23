@@ -21,4 +21,35 @@ RSpec.describe Draper do
       end
     end
   end
+
+  describe '.decorable?' do
+    it 'returns false for nil' do
+      expect(described_class.decorable?(nil)).to be false
+    end
+
+    it 'returns false for an empty enumerable' do
+      expect(described_class.decorable?([])).to be false
+    end
+
+    it 'returns true for a non-empty enumerable' do
+      expect(described_class.decorable?([Product.new])).to be true
+    end
+
+    it 'returns false for an already-decorated object' do
+      expect(described_class.decorable?(ProductDecorator.new(Product.new))).to be false
+    end
+
+    it 'returns true for a plain object' do
+      expect(described_class.decorable?(Product.new)).to be true
+    end
+
+    it 'returns false for a blank ActiveRecord::Relation' do
+      expect(described_class.decorable?(Post.none)).to be false
+    end
+
+    it 'returns true for a present ActiveRecord::Relation' do
+      FactoryBot.create(:post)
+      expect(described_class.decorable?(Post.all)).to be true
+    end
+  end
 end

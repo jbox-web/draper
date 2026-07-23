@@ -8,8 +8,8 @@ gemfile(true) do
 
   git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-  gem "rails", "7.0.2"
-  gem "sqlite3"
+  gem "rails", "~> 7.2"
+  gem "sqlite3", "~> 2.1"
   gem "benchmark-ips"
   gem "benchmark-memory"
 

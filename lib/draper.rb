@@ -49,10 +49,15 @@ module Draper
       end
     end
 
-    def _guess_decorator(object_or_enumerable, with: nil, namespace: nil)
-      object_or_enumerable = object_or_enumerable.first if object_or_enumerable.is_a? Enumerable
+    def _guess_decorator(object_or_enumerable, with: nil, namespace: nil) # rubocop:disable Metrics/CyclomaticComplexity
+      object_or_enumerable = object_or_enumerable.first if object_or_enumerable.is_a?(Enumerable)
+
+      # Fast path: an explicit decorator class with no namespace prefix is already the
+      # answer — skip the array/join/constantize round-trip (and its allocations).
+      return with if with.is_a?(Module) && (namespace.nil? || namespace.empty?)
+
       klass     = with || "#{object_or_enumerable.class.name}Decorator"
-      decorator = [namespace, klass].compact.join('::')
+      decorator = namespace.nil? ? klass.to_s : "#{namespace}::#{klass}"
       decorator.safe_constantize || raise(Draper::UninferrableDecoratorError.new(klass, decorator))
     end
 

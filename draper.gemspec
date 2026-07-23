@@ -17,7 +17,7 @@ Gem::Specification.new do |s|
 
   s.files = Dir['README.md', 'LICENSE', 'lib/**/*.rb', 'lib/**/*.rake']
 
-  s.add_dependency 'rails', '>= 7.0'
+  s.add_dependency 'rails', '>= 7.2'
   s.add_dependency 'request_store', '>= 1.0'
   s.add_dependency 'zeitwerk'
 end
