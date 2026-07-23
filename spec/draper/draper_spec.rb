@@ -20,6 +20,22 @@ RSpec.describe Draper do
         }.to raise_error(Draper::UninferrableDecoratorError)
       end
     end
+
+    context 'when a block is given' do
+      it 'yields the decorated object and returns the block result' do
+        object  = Product.new
+        yielded = nil
+
+        result = described_class.decorate(object) do |decorator|
+          yielded = decorator
+          :block_result
+        end
+
+        expect(yielded).to be_a ProductDecorator
+        expect(yielded.object).to be object
+        expect(result).to eq :block_result
+      end
+    end
   end
 
   describe '.decorable?' do

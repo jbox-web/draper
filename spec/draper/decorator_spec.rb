@@ -190,6 +190,19 @@ RSpec.describe Draper::Decorator do
       expect(decorated).not_to be_an_instance_of inner
     end
 
+    it 'applies the given scope to the association before decorating' do
+      klass = Class.new(described_class) do
+        decorates_association :items, with: ProductDecorator, scope: :recent
+      end
+      product  = Product.new
+      relation = double(recent: [product])
+
+      decorated = klass.new(double(items: relation)).items
+
+      expect(relation).to have_received(:recent)
+      expect(decorated.first).to be_a ProductDecorator
+    end
+
     it 'works when a subclass overrides #initialize without calling super' do
       klass = Class.new(described_class) do
         decorates_association :items
